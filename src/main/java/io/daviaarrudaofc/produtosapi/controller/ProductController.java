@@ -2,18 +2,16 @@ package io.daviaarrudaofc.produtosapi.controller;
 
 import io.daviaarrudaofc.produtosapi.model.Product;
 import io.daviaarrudaofc.produtosapi.repository.ProductRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController// QUE VAI RECEBER RECEBER REQUISIÇOIES,POR ISSO MARCA A CLASSE co, esse anotation
 @RequestMapping("/produtos")// é pra dizer a URL base desse controller
 public class ProductController {
 
-    private ProductRepository productRepository;
+    private final ProductRepository  productRepository;
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -22,10 +20,17 @@ public class ProductController {
     @PostMapping
     public Product salvar(@RequestBody Product produto){
         System.out.println("Produto recebido : "+ produto);
+        // Gera um ID único para o produto e define esse ID no objeto
         var id = UUID.randomUUID().toString();
         produto.setId(id);
         productRepository.save(produto);
         return produto;
+    }
+    @GetMapping("/{id}")
+    public Product obterPorId(@PathVariable("id") String id){
+       // Optional<Product> produto = productRepository.findById(id);
+       // return produto.isPresent() ? produto.get() : null;
+        return  productRepository.findById(id).orElse(null);
     }
 
 }
