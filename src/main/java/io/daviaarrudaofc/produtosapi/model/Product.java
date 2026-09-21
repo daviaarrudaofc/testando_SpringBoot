@@ -1,15 +1,28 @@
 package io.daviaarrudaofc.produtosapi.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 //POJO -> Plain old Java Object
+
 @Setter
 @Getter
+@Entity
+@Table(name = "produto")
 public class Product {
+
+    @Id
+    @Column(name = "id")
     private String id;// nunca se passa o id,vms dizer assim,pois ela é autoincrementada
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "preco")
     private Double preco;
 
 
