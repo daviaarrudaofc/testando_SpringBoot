@@ -4,6 +4,7 @@ import io.daviaarrudaofc.produtosapi.model.Product;
 import io.daviaarrudaofc.produtosapi.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,5 +43,9 @@ public class ProductController {
     public void atualizar(@PathVariable("id") String id, @RequestBody Product produto){
         produto.setId(id);
         productRepository.save(produto);
+    }
+    @GetMapping
+    public List<Product> buscar(@RequestParam("name") String name){
+        return productRepository.findByName(name);
     }
 }
